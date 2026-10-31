@@ -1,0 +1,19 @@
+{
+  "id": "neobase.transports",
+  "name": "Transports",
+  "version": "1.0.0",
+  "author": "NDesumeur",
+  "description": "Les prochains passages des bus Tadao (Lens-Liévin-Hénin-Carvin), horaires et position des bus en direct.",
+  "icon": "icon.png",
+  "entry": "index.js",
+  "view": "transports",
+  "neobase": ">=4.0.0",
+  "type": "app",
+  "category": "Voyage",
+  "mobile": true,
+  "system": false,
+  "dependencies": {},
+  "permissions": [
+    "full"
+  ]
+}
