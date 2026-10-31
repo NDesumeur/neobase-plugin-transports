@@ -2,11 +2,35 @@
 // Ses données sont dans le dossier du plugin, que NeoBase sauvegarde (synchro cloud et sauvegardes) ; à la première ouverture elle reprend ce que tu avais dans NeoBase.
 // Elle demande l'accès complet pour utiliser les outils d'interface de NeoBase. NeoBase ne l'ouvre que si elle est signée.
 const HTML = "<div class=\"appWrap\">\n      <div class=\"agHead\"><span class=\"label\">Transports · Tadao</span></div>\n      <div id=\"tpFavs\" class=\"setBg\"></div>\n      <div class=\"sysCard px\"><input class=\"f\" id=\"tpSearch\" placeholder=\"Chercher un arrêt (ex : Gare de Lens, Bollaert…)\" spellcheck=\"false\"><div id=\"tpResults\"></div></div>\n      <div class=\"sysCard px\" id=\"tpBoard\"><div class=\"hint\">Choisis un arrêt pour voir les prochains passages.</div></div>\n    </div>";
+/*CSS-MOVED*/ const CSS = `#tpSearch{font-size:17px}
+#tpResults{display:flex;flex-direction:column;gap:2px}
+.tpRow{cursor:var(--cp,pointer)}
+.tpStops:not(:empty){display:flex;flex-direction:column;margin:0 0 8px 20px;padding-left:12px;box-shadow:inset 3px 0 0 var(--line2)}
+.tpStop{display:flex;justify-content:space-between;gap:12px;padding:3px 8px;font-size:14px;color:var(--lilac)}
+.tpStop.past{color:var(--muted);opacity:.6}
+.tpStop.here{color:#fff;background:rgba(var(--mgr),.2)}
+.tpResult{all:unset;cursor:var(--cp,pointer);display:flex;justify-content:space-between;gap:12px;padding:8px 10px;font-size:15px}
+.tpResult:hover{background:rgba(var(--mgr),.14)}
+.tpResult b{color:#fff;font-weight:600}
+.tpResult span{color:var(--muted)}
+.tpHead{display:flex;align-items:center;gap:14px}
+.tpName{font:600 22px var(--text);color:#fff}
+.tpRow{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.tpLine{min-width:64px;text-align:center;padding:6px 8px;font:9px var(--title);letter-spacing:.5px}
+.tpRow .tn{color:#fff;font-size:16px;min-width:0}
+.tpRow small{display:block;font-size:12px;color:var(--muted)}
+.tpRow.live small{color:#8ee8a0}
+.tpWhen{font:14px var(--title);color:#fff;white-space:nowrap}
+.tpWhen.now{color:var(--pink)}
+.nbaStar{all:unset;cursor:var(--cp,pointer);color:var(--muted);font-size:16px;padding:0 4px}
+.nbaStar:hover,.nbaStar.on{color:#ffd07a}
+`;  // le style de ce plugin (il utilise les variables du thème de NeoBase)
 export default async function (ctx) {
   const view = ctx.view;
   if (!ctx.host) { view.textContent = "Ce plugin doit être approuvé par NeoBase pour s'ouvrir."; return; }
   const { el, toast, sfx, ask, newTab, pixIcon, PIX, WX } = ctx.host;
   const folder = ctx.folder, legacy = ctx.legacy || {};
+  ctx.host.addStyle(CSS);
   view.innerHTML = HTML;
   const $ = id => id === "busApp" ? view : view.querySelector('#' + id);  // les identifiants de ta vue, sans toucher à ceux du reste de NeoBase
   const doc = async n => { try { return await folder.read(n); } catch { return null; } };
