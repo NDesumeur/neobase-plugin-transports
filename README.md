@@ -1,8 +1,8 @@
 # Transports
 
-Les prochains passages des bus du réseau Tadao (Lens-Liévin-Hénin-Carvin) dans NeoBase : cherche un arrêt, garde tes arrêts préférés avec l'étoile, et vois les horaires prévus avec la position des bus en direct et leur retard estimé.
+Les prochains passages des bus Tadao (Lens-Liévin-Hénin-Carvin), horaires et position des bus en direct.
 
-Tes arrêts sont rangés dans le dossier du plugin, que NeoBase sauvegarde (synchro cloud comprise).
+Ses données sont rangées dans le dossier du plugin, que NeoBase sauvegarde (synchro cloud comprise). Au premier lancement, il reprend ce que tu avais déjà dans NeoBase.
 
 ## Installer
 

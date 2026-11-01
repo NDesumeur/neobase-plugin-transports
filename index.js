@@ -42,7 +42,8 @@ export default async function (ctx) {
     for (const k of ["tadaoStops"]) if (old[k] !== undefined && old[k] !== '' && !(Array.isArray(old[k]) && !old[k].length)) prefs[k] = old[k];
     if (Object.keys(prefs).length) await folder.write('prefs', prefs);
   }
-  const neo = Object.assign({}, ctx.neo || {}, { win: a => ctx.host.win?.(a), getSettings: async () => prefs, setSettings: async s => { Object.assign(prefs, s); await folder.write('prefs', prefs); return prefs; } });
+  const tp = (name, ...a) => ctx.neo.pluginMain('neobase.transports', name, ...a);  // les horaires et les bus en direct vivent dans le main.js du plugin
+  const neo = Object.assign({}, ctx.neo || {}, { tadaoSearch: q => tp('tadao:search', q), tadaoNext: (k, at) => tp('tadao:next', k, at), tadaoTrip: id => tp('tadao:trip', id), win: a => ctx.host.win?.(a), getSettings: async () => prefs, setSettings: async s => { Object.assign(prefs, s); await folder.write('prefs', prefs); return prefs; } });
   // ---- ton code d'origine ----
   /* ---------- Transports app: Tadao (Lens-Liévin-Hénin-Carvin), next departures from the timetables + where the buses are now ---------- */
   let tpStop = null, tpTimer = null, tpTrip = null;

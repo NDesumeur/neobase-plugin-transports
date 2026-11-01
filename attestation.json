@@ -1,9 +1,0 @@
-{
-  "pluginId": "neobase.transports",
-  "repo": "NDesumeur/neobase-plugin-transports",
-  "version": "1.0.1",
-  "sha256": "df61b1575fc4ecdc4fb7575528177a04e635dabc92b39261adb55afbcf23c1af",
-  "approvedAt": "2026-10-31T17:51:20.986Z",
-  "neobase": ">=4.0.0",
-  "signature": "beQp56YIP/1IuBYmei/ptiByQnQAL34kt3athTCiiR8YOQT8y76+kZdLisKBNZlCvQCk1cAWgjfLISYoVwXEBw=="
-}
