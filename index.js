@@ -1,6 +1,6 @@
 // Transports : ton appli d'origine (HTML et code inchangés), livrée en plugin.
-// Ses données sont dans le dossier du plugin, que NeoBase sauvegarde (synchro cloud et sauvegardes) ; à la première ouverture elle reprend ce que tu avais dans NeoBase.
-// Elle tourne dans le bac à sable de NeoBase, avec ses outils d'interface (ctx.host) et seulement les autorisations de son plugin.json.
+// Ses données sont dans le dossier du plugin, que NeoDex sauvegarde (synchro cloud et sauvegardes) ; à la première ouverture elle reprend ce que tu avais dans NeoDex.
+// Elle tourne dans le bac à sable de NeoDex, avec ses outils d'interface (ctx.host) et seulement les autorisations de son plugin.json.
 const HTML = "<div class=\"appWrap\">\n      <div class=\"agHead\"><span class=\"label\">Transports · Tadao</span></div>\n      <div id=\"tpFavs\" class=\"setBg\"></div>\n      <div class=\"sysCard px\"><input class=\"f\" id=\"tpSearch\" placeholder=\"Chercher un arrêt (ex : Gare de Lens, Bollaert…)\" spellcheck=\"false\"><div id=\"tpResults\"></div></div>\n      <div class=\"sysCard px\" id=\"tpBoard\"><div class=\"hint\">Choisis un arrêt pour voir les prochains passages.</div></div>\n    </div>";
 /*CSS-MOVED*/ const CSS = `#tpSearch{font-size:17px}
 #tpResults{display:flex;flex-direction:column;gap:2px}
@@ -24,15 +24,15 @@ const HTML = "<div class=\"appWrap\">\n      <div class=\"agHead\"><span class=\
 .tpWhen.now{color:var(--pink)}
 .nbaStar{all:unset;cursor:var(--cp,pointer);color:var(--muted);font-size:16px;padding:0 4px}
 .nbaStar:hover,.nbaStar.on{color:#ffd07a}
-`;  // le style de ce plugin (il utilise les variables du thème de NeoBase)
+`;  // le style de ce plugin (il utilise les variables du thème de NeoDex)
 export default async function (ctx) {
   const view = ctx.view;
-  if (!ctx.host) { view.textContent = "Ce plugin doit être approuvé par NeoBase pour s'ouvrir."; return; }
+  if (!ctx.host) { view.textContent = "Ce plugin doit être approuvé par NeoDex pour s'ouvrir."; return; }
   const { el, toast, sfx, ask, newTab, pixIcon, PIX, WX } = ctx.host;
   const folder = ctx.folder, legacy = ctx.legacy || {};
   ctx.host.addStyle(CSS);
   view.innerHTML = HTML;
-  const $ = id => id === "busApp" ? view : view.querySelector('#' + id);  // les identifiants de ta vue, sans toucher à ceux du reste de NeoBase
+  const $ = id => id === "busApp" ? view : view.querySelector('#' + id);  // les identifiants de ta vue, sans toucher à ceux du reste de NeoDex
   const doc = async n => { try { return await folder.read(n); } catch { return null; } };
   const ymd = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
@@ -42,7 +42,7 @@ export default async function (ctx) {
     for (const k of ["tadaoStops"]) if (old[k] !== undefined && old[k] !== '' && !(Array.isArray(old[k]) && !old[k].length)) prefs[k] = old[k];
     if (Object.keys(prefs).length) await folder.write('prefs', prefs);
   }
-  const tp = (name, ...a) => ctx.neo.pluginMain('neobase.transports', name, ...a);  // les horaires et les bus en direct vivent dans le main.js du plugin
+  const tp = (name, ...a) => ctx.neo.pluginMain('neodex.transports', name, ...a);  // les horaires et les bus en direct vivent dans le main.js du plugin
   const neo = Object.assign({}, ctx.neo || {}, { tadaoSearch: q => tp('tadao:search', q), tadaoNext: (k, at) => tp('tadao:next', k, at), tadaoTrip: id => tp('tadao:trip', id), win: a => ctx.host.win?.(a), getSettings: async () => prefs, setSettings: async s => { Object.assign(prefs, s); await folder.write('prefs', prefs); return prefs; } });
   // ---- ton code d'origine ----
   /* ---------- Transports app: Tadao (Lens-Liévin-Hénin-Carvin), next departures from the timetables + where the buses are now ---------- */
@@ -54,7 +54,7 @@ export default async function (ctx) {
   async function tpOpen() { tpChips(); if (!tpStop && tpFavs()[0]) tpShow(tpFavs()[0]); else if (tpStop) tpShow(tpStop); }
   $('tpSearch').oninput = async e => {
     const q = e.target.value.trim(); if (q.length < 2) return $('tpResults').replaceChildren();
-    $('tpResults').replaceChildren(el('div', 'hint', 'Recherche… (la première fois, NeoBase télécharge les horaires Tadao, environ 20 Mo)'));
+    $('tpResults').replaceChildren(el('div', 'hint', 'Recherche… (la première fois, NeoDex télécharge les horaires Tadao, environ 20 Mo)'));
     try {
       const r = await neo.tadaoSearch(q);
       if (e.target.value.trim() !== q) return;

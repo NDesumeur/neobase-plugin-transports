@@ -1,6 +1,6 @@
 {
-  "pluginId": "neobase.transports",
-  "repo": "NDesumeur/neobase-plugin-transports",
+  "pluginId": "neodex.transports",
+  "repo": "NDesumeur/neodex-plugin-transports",
   "version": "1.1.0",
   "sha256": "67519f3b6fc221399f522c8a208be02165652d19c3bfc975b82d61fc403842af",
   "approvedAt": "2026-11-01T00:16:26.455Z",

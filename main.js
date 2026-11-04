@@ -1,4 +1,4 @@
-// Transports (Tadao) : le côté système du plugin, chargé par NeoBase une fois le plugin signé et l'accès complet accordé.
+// Transports (Tadao) : le côté système du plugin, chargé par NeoDex une fois le plugin signé et l'accès complet accordé.
 const { app } = require('electron');
 const { execFile } = require('child_process');
 const fs = require('fs');
