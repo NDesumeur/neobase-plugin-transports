@@ -10,6 +10,8 @@
   "neobase": ">=4.1.0",
   "type": "app",
   "category": "Voyage",
+  "syncMode": "fusion",
+  "syncInfo": "Arrêts et trajets favoris.",
   "mobile": true,
   "system": false,
   "dependencies": {},
