@@ -1,7 +1,7 @@
 {
   "id": "neodex.transports",
   "name": "Transports",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "NDesumeur",
   "description": "Les prochains passages des bus Tadao (Lens-Liévin-Hénin-Carvin), horaires et position des bus en direct.",
   "icon": "icon.png",
